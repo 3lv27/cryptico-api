@@ -3,11 +3,21 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
 
 const app = express();
+
+// database config
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/cryptico', {
+  keepAlive: true,
+  reconnectTries: Number.MAX_VALUE,
+  useMongoClient: true
+});
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
